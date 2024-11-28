@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,8 @@ public class CropController {
    * @return Crops list.
    */
   @GetMapping
+  @PreAuthorize("hasAuthority('ROLE_ADMIN') "
+          + "or hasAuthority('ROLE_MANAGER')")
   public List<CropDto> getAllCrops() {
     return cropService.findAll()
             .stream()
